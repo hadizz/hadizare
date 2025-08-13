@@ -22,6 +22,7 @@ jobs:
         key: ${{ secrets.VPS_SSH_KEY }}
         port: ${{ secrets.VPS_PORT }}
         script: |
+          git config --global --add safe.directory /var/www/hadizare.com
           cd /var/www/hadizare.com
           git pull origin main
           sudo systemctl reload nginx
