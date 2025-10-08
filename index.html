@@ -587,10 +587,11 @@
                 href="https://linkedin.com/in/hadizare"
                 target="_blank"
                 rel="noopener"
+                id="linkedin-link"  
                 >linkedin.com/in/hadizare</a
               >
               |
-              <a href="https://github.com/hadizz" target="_blank" rel="noopener"
+              <a href="https://github.com/hadizz" target="_blank" rel="noopener" id="github-link"
                 >github.com/hadizz</a
               >
             </address>
@@ -835,6 +836,22 @@
           localStorage.setItem('theme', nowDark ? 'dark' : 'light');
         });
       })();
+
+      document.getElementById('linkedin-link').addEventListener('click', function() {
+        gtag('event', 'click', {
+          'event_category': 'outbound',
+          'event_label': 'LinkedIn',
+          'value': 1
+        });
+      });
+
+      document.getElementById('github-link').addEventListener('click', function() {
+        gtag('event', 'click', {
+          'event_category': 'outbound',
+          'event_label': 'GitHub',
+          'value': 1
+        });
+      });
 
       // Image overlay (lightbox) for profile picture
       (function initImageOverlay(){
