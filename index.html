@@ -115,6 +115,16 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2WLNDXT5JE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2WLNDXT5JE');
+</script>
+
     <style>
       :root {
         /* palette */
@@ -203,7 +213,7 @@
         display: flex;
         align-items: center;
         gap: 24px;
-        margin-bottom: 16px;
+
       }
 
       .header-content {
@@ -515,44 +525,46 @@
         <img
           src="./hadi-zare.jpg"
           alt="Hadi Zare Avatar"
-          class="profile-image"
+          width="220"
+          style="border-radius: 8px;"
         />
         <div class="header-content">
-          <h1>Hadi Zare</h1>
-          <address>
-            Helsinki, Finland<br />
-            <a href="tel:+358413290082">+358413290082</a> |
-            <a href="mailto:hire@hadizare.com"
-              >hire[at]hadizare.com</a
-            >
-            |
-            <a
-              href="https://linkedin.com/in/hadizare"
-              target="_blank"
-              rel="noopener"
-              >linkedin.com/in/hadizare</a
-            >
-            |
-            <a href="https://github.com/hadizz" target="_blank" rel="noopener"
-              >github.com/hadizz</a
-            >
-          </address>
+          <div>
+            <h1>Hadi Zare</h1>
+            <address>
+              Helsinki, Finland<br />
+              <a href="tel:+358413290082">+358413290082</a> |
+              <a href="mailto:hire@hadizare.com"
+                >hire[at]hadizare.com</a
+              >
+              |
+              <a
+                href="https://linkedin.com/in/hadizare"
+                target="_blank"
+                rel="noopener"
+                >linkedin.com/in/hadizare</a
+              >
+              |
+              <a href="https://github.com/hadizz" target="_blank" rel="noopener"
+                >github.com/hadizz</a
+              >
+            </address>
+          </div>
+          <section>
+            <h2>Summary</h2>
+            <article class="card summary-card">
+              <p class="lead">
+                Senior Software Engineer with 8+ years building performant, product-focused web apps. Co‑founder of HiveGuide (Finnish Startup Permit). I ship clean, type‑safe code and lead teams to deliver end‑to‑end features across modern JavaScript stacks.
+              </p>
+              <ul class="summary-list">
+                <li>Led frontend/tech initiatives, modernized stacks, and improved DX.</li>
+                <li>Architected and shipped full‑stack products from MVP to adoption.</li>
+                <li>Strong focus on performance, accessibility, and maintainability.</li>
+              </ul>
+            </article>
+          </section>
         </div>
       </header>
-
-      <section class="section">
-        <h2>Summary</h2>
-        <article class="card summary-card">
-          <p class="lead">
-            Senior Software Engineer with 8+ years building performant, product-focused web apps. Co‑founder of HiveGuide (Finnish Startup Permit). I ship clean, type‑safe code and lead teams to deliver end‑to‑end features across modern JavaScript stacks.
-          </p>
-          <ul class="summary-list">
-            <li>Led frontend/tech initiatives, modernized stacks, and improved DX.</li>
-            <li>Architected and shipped full‑stack products from MVP to adoption.</li>
-            <li>Strong focus on performance, accessibility, and maintainability.</li>
-          </ul>
-        </article>
-      </section>
 
       <section id="experience" class="experience-section section">
         <h2>Experience</h2>
@@ -566,7 +578,7 @@
                   <span class="location"> | Helsinki, Finland</span>
                 </h3>
                 <div class="meta">
-                  <span class="badge">Software Engineer</span>
+                  <span class="badge">Co-founder & Software Engineer</span>
                   <span class="dates"><time datetime="2024-11">11/2024</time> – Present</span>
                 </div>
               </div>
