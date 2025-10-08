@@ -515,6 +515,50 @@
         .item-header { grid-template-columns: 1fr; }
         .edu-head { grid-template-columns: 44px 1fr; }
       }
+      
+      /* Image overlay (lightbox) */
+      .image-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.85);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000010; /* above dark-mode toggle */
+        padding: 24px;
+      }
+      .image-overlay[aria-hidden="false"] { display: flex; }
+      .image-overlay__img {
+        max-width: 90vw;
+        max-height: 90vh;
+        border-radius: 10px;
+        box-shadow: var(--shadow-strong);
+        border: 1px solid var(--border);
+        background: var(--surface);
+        transform: scale(0.98);
+        opacity: 0;
+        transition: transform 120ms ease, opacity 120ms ease;
+      }
+      .image-overlay[aria-hidden="false"] .image-overlay__img {
+        transform: scale(1);
+        opacity: 1;
+      }
+      .image-overlay__close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 40px;
+        height: 40px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text);
+        box-shadow: var(--shadow);
+        cursor: pointer;
+        font-size: 20px;
+      }
     </style>
   </head>
 
@@ -526,13 +570,14 @@
           src="./hadi-zare.jpg"
           alt="Hadi Zare Avatar"
           width="220"
-          style="border-radius: 8px;"
+          id="profile-picture"
+          style="border-radius: 8px; cursor: zoom-in;"
         />
         <div class="header-content">
           <div>
             <h1>Hadi Zare</h1>
             <address>
-              Helsinki, Finland<br />
+              <div style="font-size: 14px; margin: 4px 0; color: var(--muted);">00820 Helsinki, Finland</div>
               <a href="tel:+358413290082">+358413290082</a> |
               <a href="mailto:hire@hadizare.com"
                 >hire[at]hadizare.com</a
@@ -550,8 +595,7 @@
               >
             </address>
           </div>
-          <section>
-            <h2>Summary</h2>
+          <section style="margin-top: 8px;">
             <article class="card summary-card">
               <p class="lead">
                 Senior Software Engineer with 8+ years building performant, product-focused web apps. Co‑founder of HiveGuide (Finnish Startup Permit). I ship clean, type‑safe code and lead teams to deliver end‑to‑end features across modern JavaScript stacks.
@@ -789,6 +833,55 @@
           document.body.classList.toggle('dark-mode');
           button.textContent = nowDark ? '☀️' : '🌙';
           localStorage.setItem('theme', nowDark ? 'dark' : 'light');
+        });
+      })();
+
+      // Image overlay (lightbox) for profile picture
+      (function initImageOverlay(){
+        const img = document.getElementById('profile-picture');
+        if (!img) return;
+
+        // Create overlay elements once
+        const overlay = document.createElement('div');
+        overlay.className = 'image-overlay';
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.setAttribute('aria-hidden', 'true');
+
+        const fullImg = document.createElement('img');
+        fullImg.className = 'image-overlay__img';
+        fullImg.src = img.src;
+        fullImg.alt = img.alt || '';
+
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'image-overlay__close';
+        closeBtn.setAttribute('aria-label', 'Close image');
+        closeBtn.textContent = '✕';
+
+        overlay.appendChild(fullImg);
+        overlay.appendChild(closeBtn);
+        document.body.appendChild(overlay);
+
+        const open = () => {
+          overlay.setAttribute('aria-hidden', 'false');
+          // lock scroll
+          document.documentElement.style.overflow = 'hidden';
+          document.body.style.overflow = 'hidden';
+        };
+
+        const close = () => {
+          overlay.setAttribute('aria-hidden', 'true');
+          document.documentElement.style.overflow = '';
+          document.body.style.overflow = '';
+        };
+
+        img.addEventListener('click', open);
+        closeBtn.addEventListener('click', close);
+        overlay.addEventListener('click', (e) => {
+          if (e.target === overlay) close();
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && overlay.getAttribute('aria-hidden') === 'false') close();
         });
       })();
     </script>
