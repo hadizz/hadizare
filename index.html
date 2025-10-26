@@ -130,7 +130,6 @@
 
   <body>
     <button class="dark-mode-toggle" aria-label="Toggle dark mode">🌙</button>
-    <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">⬆️</button>
     <main class="container">
       <header class="header">
         <img
@@ -144,7 +143,7 @@
           <h1>Hadi Zare</h1>
           <header>Who is Hadiz?</header>
           <p style="margin-bottom: 0;">
-            Trust me, I'm not just another developer :) I was born and raised in <a href="https://en.wikipedia.org/wiki/Yazd">Yazd, Iran</a>. I studied Computer Engineering at the University of Yazd Where I worked as a Teaching assistant in Java. Then I moved to Tehran to follow the big dream of being an adult in a bigger city. I lived there with joy, embrace my friends, shed tears, loved and lost. And now I'm here in Helsinki, yet following another dream called <span style="font-style: italic;">life</span>!
+            Trust me, I'm not just another developer :) I was born and raised in <a href="https://en.wikipedia.org/wiki/Yazd">Yazd, Iran</a>. I studied Computer Engineering at the University of Yazd Where I worked as a Teaching assistant in Java. Then I moved to <a href="https://en.wikipedia.org/wiki/Tehran">Tehran</a> to follow the big dream of being an adult in a bigger city. I lived there with joy, embrace my friends, shed tears, loved and lost. And now I'm here in Helsinki, yet following another dream called <span style="font-style: italic;">life</span>!
           </p>
         </div>
       </header>
@@ -223,7 +222,6 @@
           </header>
           <div class="chapter-body">
             <p>If you're building something meaningful, if you need someone who codes with intention, leads with empathy, and ships with confidence,<br>Let's talk.</p>
-            <p>My contact:</p>
             <address>
               <div>Helsinki, Uusimaa, Finland</div>
               <a href="tel:+358413290082">+358413290082</a> |
@@ -350,37 +348,8 @@
         });
       })();
 
-      // Back-to-top button
-      (function initBackToTop(){
-        const btn = document.getElementById('back-to-top');
-        if (!btn) return;
-        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const showAt = 240; // px
-        const onScroll = () => {
-          const y = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-          if (y > showAt) btn.classList.add('visible'); else btn.classList.remove('visible');
-        };
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onScroll);
-        onScroll();
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
-        });
-      })();
     </script>
     <script type="module">
-      // Smooth scroll for anchor links
-      document.querySelectorAll('a[href^="#ch-"], a[href="#closing"]').forEach(a => {
-        a.addEventListener('click', (e) => {
-          const id = a.getAttribute('href');
-          const el = document.querySelector(id);
-          if (!el) return;
-          e.preventDefault();
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          history.pushState(null, '', id);
-        });
-      });
 
       // Scroll progress bar
       const bar = document.getElementById('story-progress');
