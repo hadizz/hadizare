@@ -208,6 +208,38 @@
         transform: translateY(-2px);
       }
 
+      /* Back-to-top FAB */
+      .back-to-top {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        width: 44px;
+        height: 44px;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--surface);
+        color: var(--text);
+        box-shadow: var(--shadow);
+        cursor: pointer;
+        opacity: 0;
+        transform: translateY(8px);
+        pointer-events: none;
+        transition: opacity 0.25s ease, transform 0.25s ease, background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        z-index: 10000000;
+      }
+
+      .back-to-top.visible {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      .back-to-top:hover {
+        transform: translateY(-2px);
+      }
+
       /* Header */
       .header {
         display: flex;
@@ -559,15 +591,61 @@
         cursor: pointer;
         font-size: 20px;
       }
+
+      /* Story section */
+      #story-progress {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 3px;
+        width: 0;
+        background: var(--accent);
+        z-index: 100000;
+        transform-origin: 0 50%;
+      }
+      .story-overview {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+        list-style: none;
+        padding: 0;
+        margin: 16px 0 28px;
+      }
+      .story-overview a {
+        display: block;
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface);
+        box-shadow: var(--shadow);
+        font-weight: 700;
+      }
+      .chapter {
+        margin: 36px 0;
+        padding: 18px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+      .chapter header { margin-bottom: 10px; }
+      .chapter header h3 { margin: 0 0 4px; }
+      .chapter .chapter-body p { line-height: 1.7; margin: 10px 0; }
+      .reveal { opacity: 0; transform: translateY(8px); will-change: opacity, transform; }
+      .muted { color: var(--muted); }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal { opacity: 1 !important; transform: none !important; }
+      }
     </style>
   </head>
 
   <body>
     <button class="dark-mode-toggle" aria-label="Toggle dark mode">🌙</button>
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">⬆️</button>
     <main class="container">
       <header class="header">
         <img
-          src="./hadi-zare.jpg"
+          src="assets/img/hadi-zare.jpg"
           alt="Hadi Zare Avatar"
           width="220"
           id="profile-picture"
@@ -596,7 +674,7 @@
               >
             </address>
           </div>
-          <section style="margin-top: 8px;">
+          <!-- <section style="margin-top: 8px;">
             <article class="card summary-card">
               <p class="lead">
                 Senior Software Engineer with 8+ years building performant, product-focused web apps. Co‑founder of HiveGuide (Finnish Startup Permit). I ship clean, type‑safe code and lead teams to deliver end‑to‑end features across modern JavaScript stacks.
@@ -607,11 +685,118 @@
                 <li>Strong focus on performance, accessibility, and maintainability.</li>
               </ul>
             </article>
-          </section>
+          </section> -->
         </div>
       </header>
 
-      <section id="experience" class="experience-section section">
+      <div id="story-progress" aria-hidden="true"></div>
+      <section id="story" class="section">
+
+        <article id="ch-5" class="chapter reveal">
+          <header>
+            <h3>The Finnish Chapter — Building HiveGuide</h3>
+            <small class="muted">Creation, ownership, AI, alignment, purpose</small>
+          </header>
+          <div class="chapter-body">
+            <p>Helsinki felt different from the moment I arrived.</p>
+            <p>Here, I founded <strong>HiveGuide</strong>, an AI-powered assistant to make workplaces more human.</p>
+            <p>I built it with my friend <a href="https://www.linkedin.com/in/alivaghefi/" target="_blank" rel="noopener">Ali</a>. He is the co-founder of the company.</p>
+            <p>We joined <strong>Helsinki Incubators</strong>, tested with Finnish companies, and watched the idea grow into something real.</p>
+            <p>Here is the <a href="https://hiveguide.xyz" target="_blank" rel="noopener">HiveGuide website</a>.</p>
+            
+            <img src="assets//img/hiveguide/banner.jpg" alt="HiveGuide banner" style="width: 60%; margin: 0 auto; display: block; border-radius: 8px; box-shadow: var(--shadow);" />
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 24px 0;">
+              <img src="assets//img/hiveguide/business-helsinki.jpg" alt="Business Helsinki" style="width: 100%; border-radius: 8px; box-shadow: var(--shadow);" />
+              <img src="assets//img/hiveguide/cofounders.jpg" alt="Co-founders" style="width: 100%; border-radius: 8px; box-shadow: var(--shadow);" />
+              <img src="assets//img/hiveguide/incubator.jpg" alt="Helsinki Incubators" style="width: 100%; border-radius: 8px; box-shadow: var(--shadow);" />
+            </div>
+            
+            <div style="position: relative; padding-bottom: 26.25%; height: 0; overflow: hidden; border-radius: 8px;">
+              <iframe
+                src="https://www.youtube.com/embed/QKRIsmDSDR8"
+                title="HiveGuide demo"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+              ></iframe>
+            </div>
+            <p>here is the linkedin post about joining Helsinki Incubators: <a href="https://www.linkedin.com/posts/hadizare_startuplife-customerdiscovery-entrepreneurship-activity-7372253388086009856-9e21/?utm_source=share&utm_medium=member_desktop&rcm=ACoAACkASeABDiOFtck5CIrhp2P-R3neO3oHWD8" target="_blank" rel="noopener">LinkedIn post about joining Helsinki Incubators</a></p>
+            <p>In Finland, I found clarity.<br/>A place that builds quietly, creates deeply, and believes in balance.</p>
+          </div>
+        </article>
+
+        <article id="ch-6" class="chapter reveal">
+          <header>
+            <h3>Teaching, Creating, and Giving Back</h3>
+            <small class="muted">Mentorship, creativity, legacy, open source</small>
+          </header>
+          <div class="chapter-body">
+            <p>I've always believed that code is just a tool.<br/>What matters is what you build with it — and who you help along the way.</p>
+            <p>That's why I started teaching at <strong>Rubikamp</strong>.<br/>Not as a job.<br/>As a calling.</p>
+            <p>I wanted to show teenagers that they could create anything — that their age didn't matter, their location didn't matter, their background didn't matter.<br/>Only their curiosity did.</p>
+            <p>I taught them HTML, CSS, JavaScript.<br/>But more than that, I taught them how to think like builders.<br/>How to break problems into pieces.<br/>How to fail, iterate, and ship.</p>
+            <p>Watching them discover their first "aha!" moment — that feeling when the code finally works — reminded me why I started coding in the first place.</p>
+            <p>But teaching wasn't enough.<br/>I needed to create.</p>
+            <p>So I built things on the side.<br/>Things that scratched my own itch.<br/>Things that made me smile.</p>
+            <p>Like <strong>yobro.cc</strong> — a gym accountability app where you pair with a bro, check in from your phone, and face real consequences if you skip. Because flaking is not an option.</p>
+            <p>Or <strong>xpotify.cc</strong> — an anonymous platform where people share 256-character stories about songs. Music meets memory. No names, just feelings.</p>
+            <p>I also built a <strong>Persian typo correction extension</strong> — because I got tired of switching keyboards. Small problem, simple solution. But it helped thousands of people.</p>
+            <p>That's what I love about open source.<br/>You solve your problem, then you share it, and suddenly it's solving problems for strangers around the world.</p>
+            <p>These projects aren't just code.<br/>They're experiments.<br/>They're conversations with myself about what matters.</p>
+            <p>They remind me that creating isn't always about building companies or systems at scale.<br/>Sometimes it's about building something small, something playful, something that makes one person's day a little better.<br/>That's legacy too.</p>
+          </div>
+        </article>
+
+        <article id="ch-7" class="chapter reveal">
+          <header>
+            <h3>Beyond the Screen — Life Outside Code</h3>
+            <small class="muted">Balance, inspiration, humanity, creativity</small>
+          </header>
+          <div class="chapter-body">
+            <p>I don't live in front of a screen.<br/>I live between them.</p>
+            <p>Because the best ideas never come from staring at code.<br/>They come when I'm climbing a wall, kneading dough, or standing still in a forest.</p>
+            <p>I shoot <strong>analog photography</strong>.<br/>Film cameras force you to slow down. To think before you click. To accept imperfection.</p>
+            <p>There's something honest about film — the grain, the light leaks, the unexpected results.<br/>It reminds me that not everything needs to be optimized.</p>
+            <p>Some of my best shots are on <strong><a href="https://www.lomography.com/homes/hadizxo" target="_blank" rel="noopener">Lomography</a></strong>.<br/>Moments captured in Helsinki streets, mountain trails, quiet cafes.<br/>Photography taught me to see — really see — the light, the composition, the story hiding in plain sight.</p>
+            <p>I also <strong>boulder</strong>.<br/>Climbing is problem-solving with your body.<br/>Every route is a puzzle.<br/>Every move requires balance, trust, and commitment.<br/>When I'm on the wall, there's no room for distraction. It's the closest I get to meditation.</p>
+            <p>And then there's <strong>cooking</strong>.<br/>I make pizzas from scratch.<br/>I've tried my hand at French pastries.<br/>I experiment with flavors the same way I experiment with code.<br/>Cooking is instant feedback. You taste it, you adjust, you improve.</p>
+            <p>Most of the <strong>features I've built</strong> came to me while traveling.<br/>As a digital nomad, I coded from Lisbon cafes, Istanbul rooftops, Helsinki parks.<br/>Travel showed me that inspiration needs space.</p>
+            <p>I'm a <strong>nature person</strong>.<br/>I get my best ideas far from Wi‑Fi, deep in forests, on mountain trails, where the only notifications are birdsongs.<br/>Nature resets me. It reminds me what matters — not the next feature, not the next deploy, but the quiet, simple beauty of being present.</p>
+            <p>This is who I am.<br/>Not just a developer.<br/>Not just a founder.<br/>Not just a teacher.</p>
+            <p>I'm someone who codes with purpose, climbs with focus, cooks with love, and shoots with patience.<br/>I build software. But I live fully.</p>
+            <p>And that balance — that tension between creation and rest, between speed and stillness, between the digital and the analog — that's where my best work comes from.</p>
+          </div>
+        </article>
+
+        <article id="closing" class="chapter reveal">
+          <header>
+            <h3>What's Next — Let's Build Together</h3>
+            <small class="muted">Connection, openness, invitation</small>
+          </header>
+          <div class="chapter-body">
+            <p>So that's my story. From circuits in Yazd to code in Tehran, to teams across borders, to startups in Helsinki.</p>
+            <p>From building robots as a teenager to building products that scale.<br/>From failure to growth.<br/>From chaos to clarity.<br/>From dreams to delivery.</p>
+            <p>But this isn't the end. It's just where I am right now.</p>
+            <p>I'm looking for what comes next — a team that values craft, a company that builds with purpose, a place where I can contribute deeply and grow alongside people who care.</p>
+            <p>If you're building something meaningful, if you need someone who codes with intention, leads with empathy, and ships with confidence — let's talk.</p>
+            <p>
+              <a href="mailto:hire@hadizare.com">hire@hadizare.com</a> ·
+              <a href="https://linkedin.com/in/hadizare" target="_blank" rel="noopener">LinkedIn</a> ·
+              <a href="https://github.com/hadizz" target="_blank" rel="noopener">GitHub</a>
+            </p>
+            <p class="muted">Side Projects:</p>
+            <ul>
+              <li><a href="https://yobro.cc" target="_blank" rel="noopener">yobro.cc</a> — Gym accountability, no mercy</li>
+              <li><a href="https://xpotify.cc" target="_blank" rel="noopener">xpotify.cc</a> — Anonymous music stories</li>
+              <li><a href="https://github.com/hadizz/persian-typo-mistake-extension" target="_blank" rel="noopener">Persian Typo Extension</a> — Keyboard switching helper</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <!-- <section id="experience" class="experience-section section">
         <h2>Experience</h2>
         <div class="timeline">
           <article class="timeline-item">
@@ -623,8 +808,8 @@
                   <span class="location"> | Helsinki, Finland</span>
                 </h3>
                 <div class="meta">
-                  <span class="badge">Co-founder & Software Engineer</span>
-                  <span class="dates"><time datetime="2024-11">11/2024</time> – Present</span>
+                  <span class="badge">Software Engineer & Co-founder</span>
+                  <span class="dates"><time datetime="2024-12">12/2024</time> – Present</span>
                 </div>
               </div>
               <ul>
@@ -645,7 +830,7 @@
                 </h3>
                 <div class="meta">
                   <span class="badge">Frontend Tech Lead</span>
-                  <span class="dates"><time datetime="2023-07">07/2023</time> – <time datetime="2024-10">10/2024</time> (1 yr 4 mos)</span>
+                  <span class="dates"><time datetime="2023-03">03/2023</time> – <time datetime="2024-12">12/2024</time> (1 yr 10 mos)</span>
                 </div>
               </div>
               <ul>
@@ -655,25 +840,7 @@
             </div>
           </article>
 
-          <article class="timeline-item">
-            <div class="timeline-marker"></div>
-            <div class="timeline-content card">
-              <div class="item-header">
-                <h3>
-                  <a href="https://roomvu.com" target="_blank" rel="noopener">Roomvu</a>
-                  <span class="location"> | Vancouver, Canada (Remote)</span>
-                </h3>
-                <div class="meta">
-                  <span class="badge">Senior Frontend Developer (Contract)</span>
-                  <span class="dates"><time datetime="2023-04">04/2023</time> – <time datetime="2023-06">06/2023</time> (3 mos)</span>
-                </div>
-              </div>
-              <ul>
-                <li>Created and maintained a decoupled front‑end architecture to accelerate delivery and reduce development costs.</li>
-                <li>Optimized front‑end components to improve performance and user experience, increasing engagement and retention.</li>
-              </ul>
-            </div>
-          </article>
+          
 
           <article class="timeline-item">
             <div class="timeline-marker"></div>
@@ -685,7 +852,7 @@
                 </h3>
                 <div class="meta">
                   <span class="badge">Senior Frontend Developer</span>
-                  <span class="dates"><time datetime="2021-04">04/2021</time> – <time datetime="2023-03">03/2023</time> (2 yrs)</span>
+                  <span class="dates"><time datetime="2019-04">04/2019</time> – <time datetime="2023-03">03/2023</time> (3 yrs 11 mos)</span>
                 </div>
               </div>
               <ul>
@@ -703,87 +870,141 @@
         <h2>Technical Skills</h2>
         <div class="skills-grid">
           <article class="card skill-card">
-            <div class="title">Languages</div>
-            <p class="subtitle">Core programming languages</p>
+            <div class="title">Programming Languages</div>
+            <p class="subtitle">Core languages</p>
             <div class="skill-badges">
-              <span class="skill-badge">JavaScript (ES6+)</span>
-              <span class="skill-badge">TypeScript</span>
               <span class="skill-badge">Python</span>
-              <span class="skill-badge">Java</span>
+              <span class="skill-badge">TypeScript</span>
+              <span class="skill-badge">JavaScript (ES6+)</span>
+              <span class="skill-badge">C# (Basic)</span>
+              <span class="skill-badge">SQL</span>
             </div>
           </article>
 
           <article class="card skill-card">
-            <div class="title">Backend</div>
-            <p class="subtitle">APIs, services, frameworks</p>
+            <div class="title">AI/ML & Data Technologies</div>
+            <p class="subtitle">Intelligent systems & data pipelines</p>
             <div class="skill-badges">
-              <span class="skill-badge">NestJS</span>
+              <span class="skill-badge">Production-scale AI Solutions</span>
+              <span class="skill-badge">LLM Integration</span>
+              <span class="skill-badge">RAG Architecture</span>
+              <span class="skill-badge">Vector DBs (LanceDB)</span>
+              <span class="skill-badge">NLP</span>
+              <span class="skill-badge">LangChain</span>
+              <span class="skill-badge">Data Pipelines</span>
+              <span class="skill-badge">ETL Processes</span>
+              <span class="skill-badge">Data Integration</span>
+            </div>
+          </article>
+
+          <article class="card skill-card">
+            <div class="title">Cloud Platforms & AI Services</div>
+            <p class="subtitle">Cloud, hosting, AI platforms</p>
+            <div class="skill-badges">
+              <span class="skill-badge">AWS (EC2, S3, Amplify)</span>
+              <span class="skill-badge">Azure</span>
+              <span class="skill-badge">Cloud-based AI Platforms</span>
+              <span class="skill-badge">AI Integrations (APIs, MCP)</span>
+              <span class="skill-badge">Firebase</span>
+              <span class="skill-badge">Vercel</span>
+            </div>
+          </article>
+
+          <article class="card skill-card">
+            <div class="title">Backend & API Technologies</div>
+            <p class="subtitle">Services, APIs, microservices</p>
+            <div class="skill-badges">
               <span class="skill-badge">Node.js</span>
+              <span class="skill-badge">NestJS</span>
               <span class="skill-badge">Express.js</span>
               <span class="skill-badge">Django</span>
-              <span class="skill-badge">FastAPI</span>
-              <span class="skill-badge">Spring Boot</span>
-              <span class="skill-badge">Laravel</span>
-            </div>
-          </article>
-
-          <article class="card skill-card">
-            <div class="title">Frontend</div>
-            <p class="subtitle">UI frameworks, state, styling</p>
-            <div class="skill-badges">
-              <span class="skill-badge">React</span>
-              <span class="skill-badge">Next.js</span>
-              <span class="skill-badge">Vue</span>
-              <span class="skill-badge">Nuxt</span>
-              <span class="skill-badge">React Query</span>
-              <span class="skill-badge">Redux</span>
-              <span class="skill-badge">Zustand</span>
+              <span class="skill-badge">RESTful APIs</span>
               <span class="skill-badge">GraphQL</span>
-              <span class="skill-badge">HTML5</span>
-              <span class="skill-badge">SCSS/SASS</span>
-              <span class="skill-badge">TailwindCSS</span>
-              <span class="skill-badge">Material UI</span>
-              <span class="skill-badge">Ant Design</span>
-              <span class="skill-badge">Webpack</span>
-              <span class="skill-badge">RESTful API</span>
+              <span class="skill-badge">Microservices Architecture</span>
+              <span class="skill-badge">API Development</span>
+              <span class="skill-badge">MCP Protocols</span>
             </div>
           </article>
 
           <article class="card skill-card">
-            <div class="title">Databases</div>
-            <p class="subtitle">Relational and document stores</p>
+            <div class="title">Frontend Technologies</div>
+            <p class="subtitle">Frameworks, state, UI systems</p>
+            <div class="skill-badges">
+              <span class="skill-badge">React.js</span>
+              <span class="skill-badge">Next.js</span>
+              <span class="skill-badge">Angular</span>
+              <span class="skill-badge">RxJS</span>
+              <span class="skill-badge">Vue.js</span>
+              <span class="skill-badge">Nuxt.js</span>
+              <span class="skill-badge">Redux</span>
+              <span class="skill-badge">Redux Toolkit</span>
+              <span class="skill-badge">NgRx</span>
+              <span class="skill-badge">Zustand</span>
+              <span class="skill-badge">Context API</span>
+              <span class="skill-badge">React Query</span>
+              <span class="skill-badge">GraphQL</span>
+              <span class="skill-badge">Material-UI</span>
+              <span class="skill-badge">Tailwind CSS</span>
+              <span class="skill-badge">TypeScript</span>
+            </div>
+          </article>
+
+          <article class="card skill-card">
+            <div class="title">Databases & Data Management</div>
+            <p class="subtitle">Relational, document, vector</p>
             <div class="skill-badges">
               <span class="skill-badge">PostgreSQL</span>
-              <span class="skill-badge">MySQL</span>
               <span class="skill-badge">MongoDB</span>
               <span class="skill-badge">Redis</span>
+              <span class="skill-badge">Vector DBs (LanceDB)</span>
+              <span class="skill-badge">MySQL</span>
+              <span class="skill-badge">Data-driven Applications</span>
+              <span class="skill-badge">Data Integration Pipelines</span>
             </div>
           </article>
 
           <article class="card skill-card">
-            <div class="title">DevOps & Infra</div>
-            <p class="subtitle">Cloud, CI/CD, containers, platforms</p>
+            <div class="title">DevOps & Infrastructure</div>
+            <p class="subtitle">Containers, CI/CD, automation</p>
             <div class="skill-badges">
               <span class="skill-badge">Docker</span>
-              <span class="skill-badge">CI/CD</span>
-              <span class="skill-badge">Azure</span>
-              <span class="skill-badge">AWS</span>
               <span class="skill-badge">Kubernetes</span>
-              <span class="skill-badge">Kafka</span>
-              <span class="skill-badge">Vercel</span>
-              <span class="skill-badge">Git</span>
+              <span class="skill-badge">CI/CD Pipelines</span>
+              <span class="skill-badge">GitHub Actions</span>
+              <span class="skill-badge">Linux</span>
+              <span class="skill-badge">Nginx</span>
+              <span class="skill-badge">Automated Deployment</span>
             </div>
           </article>
 
           <article class="card skill-card">
-            <div class="title">Testing & QA</div>
-            <p class="subtitle">Unit, integration, E2E</p>
+            <div class="title">Development & Testing</div>
+            <p class="subtitle">Tooling and quality assurance</p>
             <div class="skill-badges">
-              <span class="skill-badge">JUnit 5</span>
-              <span class="skill-badge">Spring Test</span>
-              <span class="skill-badge">React Testing Library</span>
+              <span class="skill-badge">Git</span>
+              <span class="skill-badge">Webpack</span>
+              <span class="skill-badge">Vite</span>
+              <span class="skill-badge">Storybook</span>
               <span class="skill-badge">Jest</span>
               <span class="skill-badge">Cypress</span>
+              <span class="skill-badge">ESLint</span>
+              <span class="skill-badge">Prettier</span>
+              <span class="skill-badge">E2E Testing</span>
+              <span class="skill-badge">Test Automation</span>
+            </div>
+          </article>
+
+          <article class="card skill-card">
+            <div class="title">Business & Methodologies</div>
+            <p class="subtitle">Ways of working and delivery</p>
+            <div class="skill-badges">
+              <span class="skill-badge">Agile Development</span>
+              <span class="skill-badge">Scrum</span>
+              <span class="skill-badge">Kanban</span>
+              <span class="skill-badge">Stakeholder Management</span>
+              <span class="skill-badge">Business Process Optimization</span>
+              <span class="skill-badge">Cross-functional Team Leadership</span>
+              <span class="skill-badge">Goal-oriented Development</span>
             </div>
           </article>
         </div>
@@ -797,17 +1018,72 @@
               <div class="edu-icon">🎓</div>
               <div>
                 <div class="edu-title">Bachelor of Science in Computer Engineering</div>
-                <div class="edu-institution">University of Arts and Sciences of Yazd</div>
+                <div class="edu-institution">Yazd University</div>
               </div>
               <div class="edu-meta">
                 <span class="edu-badge">B.Sc</span>
                 <span class="dates"><time datetime="2017">2017</time> – <time datetime="2023">2023</time></span>
               </div>
             </div>
-            <p class="edu-location">Yazd, Iran</p>
+            <p class="edu-location">Yazd, Yazd Province, Iran</p>
+            <ul>
+              <li><strong>Thesis:</strong> Improving Web Accessibility Through Keyboard Language Auto-Correction</li>
+              <li><strong>Project:</strong> <a href="https://hadizz.github.io/persian-typo-mistake-extension/" target="_blank" rel="noopener">Persian Typo Correction Browser Extension</a></li>
+            </ul>
+          </article>
+
+          <article class="card edu-card">
+            <div class="edu-head">
+              <div class="edu-icon">🗣️</div>
+              <div>
+                <div class="edu-title">Languages</div>
+                <div class="edu-institution">English, Persian</div>
+              </div>
+              <div class="edu-meta">
+                <span class="edu-badge">C1</span>
+              </div>
+            </div>
+            <ul>
+              <li>English — Professional Working Proficiency (IELTS Academic 7.0, C1 Level)</li>
+              <li>Persian — Native</li>
+            </ul>
+          </article>
+
+          <article class="card edu-card">
+            <div class="edu-head">
+              <div class="edu-icon">🏅</div>
+              <div>
+                <div class="edu-title">Certifications</div>
+                <div class="edu-institution">Innovation & incubator programs</div>
+              </div>
+              <div class="edu-meta">
+                <span class="edu-badge">AI/Deeptech</span>
+              </div>
+            </div>
+            <ul>
+              <li>Business Finland Innovation Funding Approval</li>
+              <li>Helsinki Incubators Journeys Program (Deeptech & AI) — <a href="https://www.helsinki.fi/en/networks/helsinki-incubators/programmes/journeys-incubator" target="_blank" rel="noopener">Program Info</a></li>
+            </ul>
+          </article>
+
+          <article class="card edu-card">
+            <div class="edu-head">
+              <div class="edu-icon">🧩</div>
+              <div>
+                <div class="edu-title">Additional Experience</div>
+                <div class="edu-institution">Methods & collaboration</div>
+              </div>
+              <div class="edu-meta">
+                <span class="edu-badge">Agile</span>
+              </div>
+            </div>
+            <ul>
+              <li>Agile Methodologies (Scrum, Kanban, SaFe, Lean)</li>
+              <li>Cross-organizational Stakeholder Management</li>
+            </ul>
           </article>
         </div>
-      </section>
+      </section> -->
 
       <div style="height: 150px;" />
     </main>
@@ -901,6 +1177,72 @@
           if (e.key === 'Escape' && overlay.getAttribute('aria-hidden') === 'false') close();
         });
       })();
+
+      // Back-to-top button
+      (function initBackToTop(){
+        const btn = document.getElementById('back-to-top');
+        if (!btn) return;
+        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const showAt = 240; // px
+        const onScroll = () => {
+          const y = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+          if (y > showAt) btn.classList.add('visible'); else btn.classList.remove('visible');
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+        onScroll();
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
+        });
+      })();
+    </script>
+    <script type="module">
+      import { animate, inView } from 'https://cdn.jsdelivr.net/npm/@motionone/dom/+esm';
+
+      // Stagger in the overview cards
+      const cards = document.querySelectorAll('.story-overview a');
+      cards.forEach((card, i) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(8px)';
+        requestAnimationFrame(() => {
+          animate(card, { opacity: 1, transform: 'translateY(0)' }, { duration: 0.35, delay: i * 0.06, easing: 'ease-out' });
+        });
+        card.addEventListener('mouseenter', () => animate(card, { transform: 'translateY(-2px) scale(1.01)' }, { duration: 0.18 }));
+        card.addEventListener('mouseleave', () => animate(card, { transform: 'translateY(0) scale(1)' }, { duration: 0.18 }));
+      });
+
+      // In-view reveal for chapters (animate once to avoid flicker)
+      inView('.reveal', ({ target, exit }) => {
+        if (target.dataset.shown === 'true') return;
+        animate(target, { opacity: 1, transform: 'translateY(0)' }, { duration: 0.4, easing: 'ease-out' });
+        target.dataset.shown = 'true';
+        exit(() => {}); // do not reset on exit
+      }, { margin: '0px 0px -20% 0px' });
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#ch-"], a[href="#closing"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          const id = a.getAttribute('href');
+          const el = document.querySelector(id);
+          if (!el) return;
+          e.preventDefault();
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.pushState(null, '', id);
+        });
+      });
+
+      // Scroll progress bar
+      const bar = document.getElementById('story-progress');
+      const setProgress = () => {
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const pct = height > 0 ? (scrollTop / height) : 0;
+        if (bar) bar.style.width = `${pct * 100}%`;
+      };
+      setProgress();
+      window.addEventListener('scroll', setProgress, { passive: true });
+      window.addEventListener('resize', setProgress);
     </script>
   </body>
 </html>
