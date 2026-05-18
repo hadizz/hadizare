@@ -1,0 +1,17 @@
+name = "spotify-now-playing"
+main = "worker/src/index.js"
+compatibility_date = "2024-09-01"
+
+# Optional: serve API on your own domain (requires hadizare.com on Cloudflare DNS)
+# [[routes]]
+# pattern = "hadizare.com/api/now-playing"
+# zone_name = "hadizare.com"
+
+# Non-secret config (optional)
+# [vars]
+# ALLOWED_ORIGINS = "https://hadizare.com,https://www.hadizare.com"
+
+# Secrets — set via CLI, never commit:
+#   npx wrangler secret put SPOTIFY_CLIENT_ID
+#   npx wrangler secret put SPOTIFY_CLIENT_SECRET
+#   npx wrangler secret put SPOTIFY_REFRESH_TOKEN
