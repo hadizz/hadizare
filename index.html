@@ -390,6 +390,7 @@
         </article>
       </section>
 
+      <!--
       <article>
         <header>
           <h3>Side Projects</h3>
@@ -403,10 +404,11 @@
           </ul>
         </div>
       </article>
+      -->
 
     </main>
 
-    <aside class="spotify-bar" id="spotify-section" aria-label="Now playing on Spotify">
+    <aside class="spotify-bar" id="spotify-section" aria-label="Now playing on Spotify" hidden>
       <a
         class="spotify-card is-loading"
         id="spotify-card"
@@ -557,22 +559,20 @@
         const SPOTIFY_API = 'https://spotify-now-playing.hadiz.workers.dev';
         const POLL_MS = 30_000;
 
-        document.body.classList.add('has-spotify-bar');
+        function setSpotifyBarVisible(visible) {
+          section.hidden = !visible;
+          document.body.classList.toggle('has-spotify-bar', visible);
+        }
 
         function render(data) {
           card.classList.remove('is-playing', 'is-paused', 'is-idle', 'is-loading', 'is-error');
 
-          if (!data?.title) {
-            card.classList.add('is-idle');
-            card.href = 'https://open.spotify.com';
-            status.textContent = 'Spotify';
-            title.textContent = 'Nothing playing right now';
-            artistEl.textContent = 'Open Spotify to start listening';
-            art.removeAttribute('src');
-            art.alt = '';
+          if (!data?.title || !data.isPlaying) {
+            setSpotifyBarVisible(false);
             return;
           }
 
+          setSpotifyBarVisible(true);
           card.href = data.songUrl || 'https://open.spotify.com';
           title.textContent = data.title;
           artistEl.textContent = data.artist || data.album || '';
@@ -584,24 +584,12 @@
             art.removeAttribute('src');
           }
 
-          if (data.isPlaying) {
-            card.classList.add('is-playing');
-            status.textContent = 'Hadiz is listening to...';
-          } else {
-            card.classList.add('is-paused');
-            status.textContent = 'Paused';
-          }
+          card.classList.add('is-playing');
+          status.textContent = 'Hadiz is listening to...';
         }
 
-        function showError(message) {
-          card.classList.remove('is-loading', 'is-playing', 'is-paused', 'is-idle');
-          card.classList.add('is-error');
-          card.href = 'https://open.spotify.com';
-          status.textContent = 'Spotify';
-          title.textContent = 'Could not load';
-          artistEl.textContent = message;
-          art.removeAttribute('src');
-          art.alt = '';
+        function showError() {
+          setSpotifyBarVisible(false);
         }
 
         async function refresh() {
@@ -613,7 +601,7 @@
             }
             render(data);
           } catch (err) {
-            showError(err.message || 'Check connection');
+            showError();
           }
         }
 
