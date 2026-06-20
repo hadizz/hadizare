@@ -559,10 +559,26 @@
         const SPOTIFY_API = 'https://spotify-now-playing.hadiz.workers.dev';
         const POLL_MS = 30_000;
 
+        function updateSpotifyBarPadding() {
+          if (section.hidden) return;
+          document.documentElement.style.setProperty(
+            '--spotify-bar-height',
+            `${section.offsetHeight}px`
+          );
+        }
+
         function setSpotifyBarVisible(visible) {
           section.hidden = !visible;
           document.body.classList.toggle('has-spotify-bar', visible);
+          document.documentElement.classList.toggle('has-spotify-bar', visible);
+          if (visible) {
+            requestAnimationFrame(updateSpotifyBarPadding);
+          } else {
+            document.documentElement.style.removeProperty('--spotify-bar-height');
+          }
         }
+
+        window.addEventListener('resize', updateSpotifyBarPadding);
 
         function render(data) {
           card.classList.remove('is-playing', 'is-paused', 'is-idle', 'is-loading', 'is-error');
@@ -586,6 +602,7 @@
 
           card.classList.add('is-playing');
           status.textContent = 'Hadiz is listening to...';
+          requestAnimationFrame(updateSpotifyBarPadding);
         }
 
         function showError() {

@@ -53,12 +53,12 @@ main.container {
   padding: 0 20px;
 }
 
-body.has-spotify-bar {
-  padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+body.has-spotify-bar main.container {
+  padding-bottom: var(--spotify-bar-height, 100px);
 }
 
-body.has-spotify-bar main.container {
-  margin-bottom: 48px;
+html.has-spotify-bar {
+  scroll-padding-bottom: var(--spotify-bar-height, 100px);
 }
 
 .section {
